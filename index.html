@@ -106,8 +106,41 @@
 	width: auto;
 	height: 50px;
 }
+#save-btn {
+	order: 4;
+	margin-right: 5px;
+	margin-left: 10px;
+	background-image: url(speichern.png);
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: 100%; /* neue Größe des Hintergrundbildes */
+	background-color: transparent;
+	display: inline-block;
+	padding: 10px 20px;
+	border-radius: 5px;
+	border: none;
+	cursor: pointer;
+	width: auto;
+	height: 50px;
+}
 
-
+#load-btn {
+	order: 3;
+	margin-right: 5px;
+	margin-left: 10px;
+	background-image: url(hochladen.png);
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: 100%; /* neue Größe des Hintergrundbildes */
+	background-color: transparent;
+	display: inline-block;
+	padding: 10px 20px;
+	border-radius: 5px;
+	border: none;
+	cursor: pointer;
+	width: auto;
+	height: 50px;
+}
 
 
 	</style>
@@ -119,10 +152,15 @@
 		<input type="text" id="input" name="input" placeholder="Enter items separated by commas">
 		<input type="submit" value="Submit">
 	</form>
-	<div id="output"></div>
+	<div id="output">
+	</div>
 	<div id="button-container">
 		<button id="copy-btn" class="fas" content="\f0c9"></button>
 		<button id="delete-btn" class="fas" content="\f2ed"></button>
+		<button id="save-btn" class="fas" content="\f2e1"></button>
+		<input type="file" id="file-input" style="display:none">
+		<button id="load-btn" class="fas" content="\f2e4"></button>
+
 	  </div>
 	  
 	<div id="buttons"></div>
@@ -162,32 +200,77 @@ buttons.addEventListener("click", function(event) {
   }
 });
 
-	</script>
+</script>	
 
 <script>
-  // vorhandener JavaScript-Code
-
-  // Definieren Sie eine Funktion, um den Inhalt des Ausgabefelds in die Zwischenablage zu kopieren
-  function copyToClipboard() {
-    const outputText = output.innerText.trim();
-    navigator.clipboard.writeText(outputText);
-  }
-
-  // Fügen Sie einen Event-Listener zum Kopier-Button hinzu, um die Funktion copyToClipboard aufzurufen
-  const copyBtn = document.getElementById("copy-btn");
-  copyBtn.addEventListener("click", copyToClipboard);
-</script>
-<script>
-	var deleteBtn = document.getElementById("delete-btn");
-	var buttons = document.getElementById("buttons");
-	var buttonHtml = buttons.innerHTML;
+	// vorhandener JavaScript-Code
   
-	deleteBtn.addEventListener("click", function() {
-	  buttons.innerHTML = "";
-	  buttonHtml = "";
+	// Definieren Sie eine Funktion, um den Inhalt des Ausgabefelds in die Zwischenablage zu kopieren
+	function copyToClipboard() {
+	  const outputText = output.innerText.trim();
+	  navigator.clipboard.writeText(outputText);
+	}
+  
+	// Fügen Sie einen Event-Listener zum Kopier-Button hinzu, um die Funktion copyToClipboard aufzurufen
+	const copyBtn = document.getElementById("copy-btn");
+	copyBtn.addEventListener("click", copyToClipboard);
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+
+<script>
+	
+function saveAsTxt() {
+  const outputText = output.innerText.trim();
+  const blob = new Blob([outputText], {type: "text/plain;charset=utf-8"});
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.style.display = "none";
+  document.body.appendChild(link);
+  link.click();
+  URL.revokeObjectURL(link.href);
+  document.body.removeChild(link);
+}
+
+const saveBtn = document.getElementById("save-btn");
+saveBtn.addEventListener("click", () => {
+  const fileName = prompt("Please enter file name (without extension):", "output");
+  if (fileName !== null) {
+    const link = document.createElement("a");
+    link.href = "data:text/plain;charset=utf-8," + encodeURIComponent(output.innerText.trim());
+    link.download = fileName + ".txt";
+    link.style.display = "none";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
+});
+
+</script>
+
+<script>
+	const loadBtn = document.getElementById("load-btn");
+	const fileInput = document.getElementById("file-input");
+  
+	loadBtn.addEventListener("click", () => {
+	  fileInput.click();
+	});
+  
+	fileInput.addEventListener("change", () => {
+	  const file = fileInput.files[0];
+	  const reader = new FileReader();
+  
+		reader.onload = () => {
+	const text = reader.result;
+	const inputField = document.getElementById("input");
+	inputField.value = text; // set the input field value to the loaded text
+	console.log(text);
+	}
+
+  
+	  reader.readAsText(file);
 	});
   </script>
-  
+
 </body>
 </html>
 
