@@ -105,14 +105,20 @@
 			for (var i = 0; i < items.length; i++) {
 				var item = items[i].trim();
 				if (item.length > 0) {
-					buttonHtml += '<button class="button">' + item + '</button>';
+				// Überprüfen, ob ein Button mit demselben Text bereits existiert
+					var existingButton = buttons.querySelector("button.button[data-text='" + item + "']");
+					if (!existingButton) {
+					// Wenn kein Button gefunden wurde, erstellen Sie einen neuen Button
+					buttonHtml += '<button class="button" data-text="' + item + '">' + item + '</button>';
+					}
 				}
-			}
+			} // <-- Schließende geschweifte Klammer für die Schleife hinzufügen
 			buttons.innerHTML = buttonHtml;
 			input.value = "";
 			buttons.style.display = "block";
 			output.style.display = "block";
-		});
+			});
+
 
 buttons.addEventListener("click", function(event) {
 	if (event.target && event.target.classList.contains("button")) {
