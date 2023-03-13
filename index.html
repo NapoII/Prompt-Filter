@@ -144,7 +144,7 @@
 					var existingButton = buttons.querySelector("button.button[data-text='" + item + "']");
 					if (!existingButton) {
 					// Wenn kein Button gefunden wurde, erstellen Sie einen neuen Button
-					item = item.replace(/[^a-zA-Z0-9]/g, ''); // filtern der Sonderzeichen
+					item = item.replace(/[^a-zA-Z0-9\s]/g, ''); // filtern der Sonderzeichen
 					buttonHtml += '<button class="button" data-text="' + item + '">' + item + '</button>';
 					}
 				}
