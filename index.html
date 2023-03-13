@@ -71,7 +71,7 @@
 		}
 
 
-		#copy-btn {
+	#copy-btn {
 	order: 1;
 	margin-right: 10px;
 	margin-left: 5px;
@@ -245,6 +245,17 @@ saveBtn.addEventListener("click", () => {
   }
 });
 
+</script>
+
+<script>
+	var deleteBtn = document.getElementById("delete-btn");
+	var buttons = document.getElementById("buttons");
+	var buttonHtml = buttons.innerHTML;
+  
+	deleteBtn.addEventListener("click", function() {
+	  buttons.innerHTML = "";
+	  buttonHtml = "";
+	});
 </script>
 
 <script>
