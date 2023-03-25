@@ -1,4 +1,8 @@
+
 # Prompt-Filter
+
+![enter image description here](https://i.imgur.com/86RKSOX.gif)
+
 This is an HTML file that creates a web page for a "Prompt Filter" application. The user can enter a list of items separated by commas in an input field, and then click a submit button to filter out unwanted items. The filtered list is displayed in a div element with the id "output".
 
 There are four additional buttons in the application:
